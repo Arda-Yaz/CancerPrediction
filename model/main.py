@@ -3,7 +3,7 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-
+import pickle
 
 
 def create_model(data):
@@ -40,6 +40,12 @@ def main():
     data = get_clean_data()
 
     model, scaler = create_model(data)
+
+    with open("model.pkl", "wb") as f:
+        pickle.dump(model, f)
+    with open("scaler.pkl", "wb") as f:
+        pickle.dump(scaler,f)
+
 
 if __name__ == "__main__":
     main()
