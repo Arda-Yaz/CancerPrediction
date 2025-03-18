@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def get_clean_data():
-    data = pd.read_csv("../data/data.csv")
+    data = pd.read_csv("data/data.csv")
 
     data = data.drop(["Unnamed: 32", "id"], axis = 1)
 
@@ -49,6 +49,18 @@ def add_sidebar():
         ("Symmetry (worst)", "symmetry_worst"),
         ("Fractal dimension (worst)", "fractal_dimension_worst"),]
 
+    input_dict = {}
+
+    for label, key in slider_labels:
+        input_dict[key]= st.sidebar.slider(
+            label,
+            min_value = float(0),
+            max_value = float(data[key].max()),
+            value = float(data[key].mean())
+        )
+    return input_dict
+
+
 def main():
     st.set_page_config(
         page_title="Breast Cancer Predictor",
@@ -57,7 +69,9 @@ def main():
         initial_sidebar_state="expanded"
     )
 
-    add_sidebar()
+    input_data = add_sidebar()
+    st.write(input_data)
+
 
     with st.container():
         st.title("Breast Cancer Predictor")
