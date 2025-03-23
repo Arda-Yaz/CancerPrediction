@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import plotly.graph_objects as go
-
+import numpy as np
 
 
 def get_clean_data():
@@ -79,6 +79,9 @@ def get_scaled_values(input_dict):
 
 
 def get_radar_chart(input_data):
+
+    input_data = get_scaled_values(input_data)
+
     categories = ['Radius', 'Texture', 'Perimeter', 'Area', 'Smoothness', 'Compactness',
                 'Concavity', 'Concave Points','Symmetry', 'Fractal Dimension']
 
@@ -125,7 +128,32 @@ def get_radar_chart(input_data):
             )),
         showlegend=True
     )
+
     return fig
+
+def add_predictions(input_data):
+    model = pickle.load(open("model/model.pkl", "rb"))
+    scaler = pickle.load(open("model/scaler.pkl", "rb"))
+
+    input_array = np.array(list(input_data.values())).reshape(1,-1)
+    input_array_scaled = scaler.transform(input_array)
+
+    prediction = model.predict(input_array_scaled)
+
+    st.subheader("Cell cluster prediction")
+    st.write("The cell cluster is:")
+
+    if prediction[0] == 0:
+        st.write("Benign")
+    else:
+        st.write("Malicious")
+
+    st.write("Probability of being benign: ", model.predict_proba(input_array_scaled)[0][0])
+    st.write("Probability of being malicious: ", model.predict_proba(input_array_scaled)[0][1])
+
+    st.write(
+        "This app can assist medical professionals in making a diagnosis, but should not be used as a substitute for a professional diagnosis.")
+
 
 def main():
     st.set_page_config(
@@ -149,7 +177,7 @@ def main():
         radar_chart = get_radar_chart(input_data)
         st.plotly_chart(radar_chart)
     with col2:
-        st.write("this is column 2")
+        add_predictions(input_data)
 
 
 
