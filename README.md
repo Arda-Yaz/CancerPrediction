@@ -14,4 +14,4 @@ is **benign** or **malignant**. It also provides a visual representation of the 
 ## Dataset
 This project was developed using the **Breast Cancer Wisconsin (Diagnostic) Dataset**, a publicly available dataset for machine learning practice. Since this dataset may not be entirely reliable, the app is strictly for **educational purposes** and not intended for clinical or professional medical use.
 
-**[Check it Out](https://arda-yaz-cancerprediction-appmain-ryctmn.streamlit.app)**.
+**[Check it Out](https://breastcancer-pred.streamlit.app)**.
