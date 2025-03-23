@@ -144,9 +144,9 @@ def add_predictions(input_data):
     st.write("The cell cluster is:")
 
     if prediction[0] == 0:
-        st.write("Benign")
+        st.subheader("Benign", divider = "green")
     else:
-        st.write("Malicious")
+        st.subheader("Malicious", divider = "red")
 
     st.write("Probability of being benign: ", model.predict_proba(input_array_scaled)[0][0])
     st.write("Probability of being malicious: ", model.predict_proba(input_array_scaled)[0][1])
@@ -168,7 +168,7 @@ def main():
     with st.container():
         st.title("Breast Cancer Predictor")
         st.write("Please connect this app to your cytology lab to help diagnose breast cancer from your tissue sample"
-                 "This app predicst using a machine learning model whether a breast mass is benign or malignant"
+                 "This app predicts using a machine learning model whether a breast mass is benign or malignant"
                  "on the measurements it receives from your cytosis lab. You can also update the measurements by hand using the sliders in the sidebar.")
 
     col1, col2 = st.columns([4,1])
